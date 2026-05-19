@@ -54,15 +54,19 @@ public_users.get('/author/:author', async function (req, res) {
     const author = req.params.author;
 
     try {
-        const response = await axios.get("http://localhost:5000/");
-        const booksData = response.data;
+        const data = books; // MUST use local data
 
         let result = {};
 
-        for (let isbn in booksData) {
-            if (booksData[isbn].author === author) {
-                result[isbn] = booksData[isbn];
+        for (let isbn in data) {
+            if (data[isbn].author === author) {
+                result[isbn] = data[isbn];
             }
+        }
+
+        // IMPORTANT: handle no matches
+        if (Object.keys(result).length === 0) {
+            return res.status(404).json({ message: "No books found for this author" });
         }
 
         return res.status(200).json(result);
