@@ -77,14 +77,13 @@ public_users.get('/title/:title', async function (req, res) {
     const title = req.params.title;
 
     try {
-        const response = await axios.get("http://localhost:5000/");
-        const booksData = response.data;
+        const data = books; // use local data (NOT axios)
 
         let result = {};
 
-        for (let isbn in booksData) {
-            if (booksData[isbn].title === title) {
-                result[isbn] = booksData[isbn];
+        for (let isbn in data) {
+            if (data[isbn].title === title) {
+                result[isbn] = data[isbn];
             }
         }
 
