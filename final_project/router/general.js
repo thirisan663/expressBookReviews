@@ -54,13 +54,14 @@ public_users.get('/author/:author', async function (req, res) {
     const author = req.params.author;
 
     try {
-        const data = await Promise.resolve(books);
+        const response = await axios.get("http://localhost:5000/");
+        const booksData = response.data;
 
         let result = {};
 
-        for (let isbn in data) {
-            if (data[isbn].author === author) {
-                result[isbn] = data[isbn];
+        for (let isbn in booksData) {
+            if (booksData[isbn].author === author) {
+                result[isbn] = booksData[isbn];
             }
         }
 
